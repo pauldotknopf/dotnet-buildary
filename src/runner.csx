@@ -1,19 +1,15 @@
 #r "nuget:PowerArgs, 3.0.0"
 #load "nuget:simple-targets-csx, 6.0.0"
 
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-
 public static class Runner
 {
-    public static BuildOptions ParseOptions(IList<string> args)
+    public static T ParseOptions<T>(IList<string> args) where T: BuildOptions
     {
-        BuildOptions options = null;
+        T options = null;
 
         try
         {
-            options = PowerArgs.Args.Parse<BuildOptions>(args.ToArray());
+            options = PowerArgs.Args.Parse<T>(args.ToArray());
         }
         catch (PowerArgs.ArgException ex)
         {
@@ -43,8 +39,5 @@ public static class Runner
 
         [PowerArgs.ArgDefaultValue("default"), PowerArgs.ArgPosition(0)]
         public string Target { get; set; }
-
-        [PowerArgs.ArgShortcut("config"), PowerArgs.ArgDefaultValue("Release")]
-        public string Configuration { get; set; }
     }
 }

@@ -1,5 +1,4 @@
 #load "log.csx"
-using System;
 
 public static class Process
 {

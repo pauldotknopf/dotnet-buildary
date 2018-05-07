@@ -14,7 +14,7 @@ public static class Runner
         catch (PowerArgs.ArgException ex)
         {
             Console.WriteLine(ex.Message);
-            Console.WriteLine(PowerArgs.ArgUsage.GenerateUsageFromTemplate<BuildOptions>());
+            Console.WriteLine(PowerArgs.ArgUsage.GenerateUsageFromTemplate<T>());
             System.Environment.Exit(1);
         }
 

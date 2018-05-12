@@ -1,6 +1,4 @@
-﻿using System.IO;
-
-namespace Build.Buildary
+﻿namespace Build.Buildary
 {
     public static class Directory
     {

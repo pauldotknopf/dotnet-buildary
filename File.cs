@@ -29,7 +29,7 @@ namespace Build.Buildary
 
         public static List<string> GetFiles(string directory, string pattern = null)
         {
-            return string.IsNullOrEmpty(pattern)
+            return !string.IsNullOrEmpty(pattern)
                 ? System.IO.Directory.GetFiles(directory, pattern).ToList()
                 : System.IO.Directory.GetFiles(directory).ToList();
         }

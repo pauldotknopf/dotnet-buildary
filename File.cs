@@ -33,5 +33,10 @@ namespace Build.Buildary
                 ? System.IO.Directory.GetFiles(directory, pattern).ToList()
                 : System.IO.Directory.GetFiles(directory).ToList();
         }
+
+        public static void CopyFile(string source, string destination)
+        {
+            System.IO.File.Copy(source, destination);
+        }
     }
 }

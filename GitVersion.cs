@@ -7,7 +7,7 @@ namespace Build.Buildary
         public static GitVersionResult GetGitVersion(string directory)
         {
             // TODO: Switch to using GitVersion directly (.NET Standard) when it is supported: https://github.com/GitTools/GitVersion/pull/1269
-            var output = Shell.CaptureCapture($"docker run --rm -v {Path.ExpandPath(directory)}:/repo gittools/gitversion");
+            var output = Shell.ReadShell($"docker run --rm -v {Path.ExpandPath(directory)}:/repo gittools/gitversion");
             
             dynamic json = JsonConvert.DeserializeObject(output);
             var result = new GitVersionResult

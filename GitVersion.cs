@@ -1,4 +1,7 @@
-﻿using Newtonsoft.Json;
+﻿using System.Runtime.InteropServices.ComTypes;
+using Newtonsoft.Json;
+using static Build.Buildary.File;
+using static Build.Buildary.Path;
 
 namespace Build.Buildary
 {
@@ -6,9 +9,13 @@ namespace Build.Buildary
     {
         public static GitVersionResult GetGitVersion(string directory)
         {
-            // TODO: Switch to using GitVersion directly (.NET Standard) when it is supported: https://github.com/GitTools/GitVersion/pull/1269
-            var output = Shell.ReadShell($"docker run --rm -v {Path.ExpandPath(directory)}:/repo gittools/gitversion");
-            
+            string output;
+
+            // If there exists a version.json in the directory, then gitversion was run by some other means.
+            output = FileExists(CombinePath(directory, "version.json"))
+                ? ReadFile(CombinePath(directory, "version.json"))
+                : Shell.ReadShell($"docker run --rm -v {Path.ExpandPath(directory)}:/repo gittools/gitversion");
+
             dynamic json = JsonConvert.DeserializeObject(output);
             var result = new GitVersionResult
             {

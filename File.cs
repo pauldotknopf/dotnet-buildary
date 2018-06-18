@@ -38,5 +38,10 @@ namespace Build.Buildary
         {
             System.IO.File.Copy(source, destination);
         }
+
+        public static string ReadFile(string file)
+        {
+            return System.IO.File.ReadAllText(file);
+        }
     }
 }

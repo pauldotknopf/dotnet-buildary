@@ -21,5 +21,10 @@
                 dir.Delete(true); 
             }
         }
+
+        public static string CurrentDirectory()
+        {
+            return System.IO.Directory.GetCurrentDirectory();
+        }
     }
 }

@@ -67,7 +67,7 @@ namespace Build.Buildary
 
                 if (process.ExitCode != 0)
                 {
-                    await process.ThrowAsync();
+                    process.Throw();
                 }
             }
         }
@@ -101,7 +101,7 @@ namespace Build.Buildary
 
                 if (process.ExitCode != 0)
                 {
-                    await process.ThrowAsync();
+                    process.Throw();
                 }
 
                 return await process.StandardOutput.ReadToEndAsync();
@@ -115,7 +115,7 @@ namespace Build.Buildary
                 Arguments = args,
                 WorkingDirectory = workingDirectory,
                 UseShellExecute = false,
-                RedirectStandardError = true,
+                RedirectStandardError = false,
                 RedirectStandardOutput = captureOutput
             };
 
@@ -145,10 +145,7 @@ namespace Build.Buildary
         }
 
         private static void Throw(this Process process) =>
-            process.Throw(process.StandardError.ReadToEnd());
-
-        private static async Task ThrowAsync(this Process process) =>
-            process.Throw(await process.StandardError.ReadToEndAsync());
+            process.Throw($"Error with exit code {process.ExitCode}");
 
         private static void Throw(this Process process, string stdErr) =>
             throw new Exception($"The process exited with code {process.ExitCode}: {stdErr.Trim()}");

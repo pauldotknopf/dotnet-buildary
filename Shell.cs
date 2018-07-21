@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 
 namespace Build.Buildary
@@ -14,20 +15,30 @@ namespace Build.Buildary
         
         public static void RunShell(string shell)
         {
-            // TODO: Support Windows
-            
-            var escapedArgs = shell.Replace("\"", "\\\"");
-        
-            Command.Run("/usr/bin/env", $"bash -c \"{escapedArgs}\"");
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            {
+                var escapedArgs = shell.Replace("\"", "\\\"");
+                Command.Run("cmd.exe", $"/c \"{escapedArgs}\"");
+            }
+            else
+            {
+                var escapedArgs = shell.Replace("\"", "\\\"");
+                Command.Run("/usr/bin/env", $"bash -c \"{escapedArgs}\"");
+            }
         }
         
-        public static string ReadShell(string command)
+        public static string ReadShell(string shell)
         {
-            // TODO: Support Windows
-            
-            var escapedArgs = command.Replace("\"", "\\\"");
-        
-            return Command.Read("/usr/bin/env", $"bash -c \"{escapedArgs}\"");
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            {
+                var escapedArgs = shell.Replace("\"", "\\\"");
+                return Command.Read("cmd.exe", $"/c \"{escapedArgs}\"");
+            }
+            else
+            {
+                var escapedArgs = shell.Replace("\"", "\\\"");
+                return Command.Read("/usr/bin/env", $"bash -c \"{escapedArgs}\"");
+            }
         }
     }
 

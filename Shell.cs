@@ -17,8 +17,7 @@ namespace Build.Buildary
         {
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
-                var escapedArgs = shell.Replace("\"", "\\\"");
-                Command.Run("cmd.exe", $"/c \"{escapedArgs}\"");
+                Command.Run("cmd.exe", $"/S /C \"{shell}\"");
             }
             else
             {
@@ -31,8 +30,7 @@ namespace Build.Buildary
         {
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
-                var escapedArgs = shell.Replace("\"", "\\\"");
-                return Command.Read("cmd.exe", $"/c \"{escapedArgs}\"");
+                return Command.Read("cmd.exe", $"/S /C \"{shell}\"");
             }
             else
             {

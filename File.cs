@@ -27,11 +27,12 @@ namespace Build.Buildary
             System.IO.File.WriteAllText(file, text);
         }
 
-        public static List<string> GetFiles(string directory, string pattern = null)
+        public static List<string> GetFiles(string directory, string pattern = null, bool recursive = false)
         {
+            var searchOptions = recursive == true ? System.IO.SearchOption.AllDirectories : System.IO.SearchOption.TopDirectoryOnly;
             return !string.IsNullOrEmpty(pattern)
-                ? System.IO.Directory.GetFiles(directory, pattern).ToList()
-                : System.IO.Directory.GetFiles(directory).ToList();
+                ? System.IO.Directory.GetFiles(directory, pattern, searchOptions).ToList()
+                : System.IO.Directory.GetFiles(directory, "*", searchOptions).ToList();
         }
 
         public static void CopyFile(string source, string destination)

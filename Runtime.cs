@@ -11,5 +11,15 @@ namespace Build.Buildary
         {
             return RuntimeInformation.IsOSPlatform(OSPlatform.Windows);
         }
+
+        public static bool IsOSX()
+        {
+            return RuntimeInformation.IsOSPlatform(OSPlatform.OSX);
+        }
+        
+        public static bool IsLinux()
+        {
+            return RuntimeInformation.IsOSPlatform(OSPlatform.Linux);
+        }
     }
 }

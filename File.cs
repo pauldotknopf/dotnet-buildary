@@ -29,7 +29,7 @@ namespace Build.Buildary
 
         public static List<string> GetFiles(string directory, string pattern = null, bool recursive = false)
         {
-            var searchOptions = recursive == true ? System.IO.SearchOption.AllDirectories : System.IO.SearchOption.TopDirectoryOnly;
+            var searchOptions = recursive ? System.IO.SearchOption.AllDirectories : System.IO.SearchOption.TopDirectoryOnly;
             return !string.IsNullOrEmpty(pattern)
                 ? System.IO.Directory.GetFiles(directory, pattern, searchOptions).ToList()
                 : System.IO.Directory.GetFiles(directory, "*", searchOptions).ToList();

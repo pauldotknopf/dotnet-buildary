@@ -36,9 +36,9 @@ namespace Build.Buildary
             return ParseOptions<RunnerOptions>(args);
         }
 
-        public static Task<int> Run(RunnerOptions options)
+        public static Task Run(RunnerOptions options)
         {
-            return Bullseye.Targets.RunAsync(new[] {options.Target});
+            return Bullseye.Targets.RunTargetsAsync(new[] {options.Target});
         }
         
         public class RunnerOptions

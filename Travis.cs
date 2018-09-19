@@ -40,5 +40,16 @@ namespace Build.Buildary
         public static string Tag => Environment.GetEnvironmentVariable("TRAVIS_TAG");
 
         public static string Branch => Environment.GetEnvironmentVariable("TRAVIS_BRANCH");
+
+        public static string Commit => Environment.GetEnvironmentVariable("TRAVIS_COMMIT");
+        
+        public static bool IsPullRequest
+        {
+            get
+            {
+                bool.TryParse(Environment.GetEnvironmentVariable("TRAVIS_PULL_REQUEST"), out var result);
+                return result;
+            }
+        }
     }
 }

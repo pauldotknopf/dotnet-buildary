@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Build.Buildary
@@ -46,6 +47,28 @@ namespace Build.Buildary
             return !string.IsNullOrEmpty(pattern)
                 ? System.IO.Directory.GetDirectories(directory, pattern, searchOptions).ToList()
                 : System.IO.Directory.GetDirectories(directory, "*", searchOptions).ToList();
+        }
+
+        public static IDisposable ChangeDirectory(string directory)
+        {
+            var oldDirectory = System.IO.Directory.GetCurrentDirectory();
+            System.IO.Directory.SetCurrentDirectory(directory);
+            return new ChangeDirectorySession(oldDirectory);
+        }
+
+        private class ChangeDirectorySession : IDisposable
+        {
+            private readonly string _oldDirectory;
+
+            public ChangeDirectorySession(string oldDirectory)
+            {
+                _oldDirectory = oldDirectory;
+            }
+            
+            public void Dispose()
+            {
+                System.IO.Directory.SetCurrentDirectory(_oldDirectory);
+            }
         }
     }
 }

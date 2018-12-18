@@ -14,7 +14,7 @@ namespace Build.Buildary
             // If there exists a version.json in the directory, then gitversion was run by some other means.
             output = FileExists(CombinePath(directory, "version.json"))
                 ? ReadFile(CombinePath(directory, "version.json"))
-                : Shell.ReadShell($"docker run --rm -v {Path.ExpandPath(directory)}:/repo gittools/gitversion");
+                : Shell.ReadShell($"cd {directory} && dotnet gitversion");
 
             dynamic json = JsonConvert.DeserializeObject(output);
             var result = new GitVersionResult

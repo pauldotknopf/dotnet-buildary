@@ -38,7 +38,7 @@ namespace Build.Buildary
 
         public static Task Run(RunnerOptions options)
         {
-            return Bullseye.Targets.RunTargetsAsync(new[] {options.Target});
+            return Bullseye.Targets.RunTargetsAndExitAsync(new[] {options.Target});
         }
         
         public class RunnerOptions

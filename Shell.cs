@@ -9,12 +9,12 @@ namespace Build.Buildary
         {
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
-                Run("cmd.exe", $"/S /C \"{shell}\"", true);
+                Run("cmd.exe", $"/S /C \"{shell}\"", Directory.CurrentDirectory(), true);
             }
             else
             {
                 var escapedArgs = shell.Replace("\"", "\\\"");
-                Run("/usr/bin/env", $"bash -c \"{escapedArgs}\"", true);
+                Run("/usr/bin/env", $"bash -c \"{escapedArgs}\"", Directory.CurrentDirectory(), true);
             }
         }
         
@@ -22,11 +22,11 @@ namespace Build.Buildary
         {
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
-                return Read("cmd.exe", $"/S /C \"{shell}\"", true);
+                return Read("cmd.exe", $"/S /C \"{shell}\"", Directory.CurrentDirectory(), true);
             }
 
             var escapedArgs = shell.Replace("\"", "\\\"");
-            return Read("/usr/bin/env", $"bash -c \"{escapedArgs}\"", true);
+            return Read("/usr/bin/env", $"bash -c \"{escapedArgs}\"", Directory.CurrentDirectory(), true);
         }
     }
 }

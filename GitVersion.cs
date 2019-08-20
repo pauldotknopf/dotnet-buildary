@@ -1,4 +1,4 @@
-﻿using System.Runtime.InteropServices.ComTypes;
+using System.Runtime.InteropServices.ComTypes;
 using Newtonsoft.Json;
 using static Build.Buildary.File;
 using static Build.Buildary.Path;
@@ -20,8 +20,12 @@ namespace Build.Buildary
             var result = new GitVersionResult
             {
                 Version = json.MajorMinorPatch,
+                VersionMajor = json.Major,
+                VersionMinor = json.Minor,
+                VersionPatch = json.Patch,
                 PreReleaseLabel = json.PreReleaseLabel,
-                PreReleaseTag = json.PreReleaseTag
+                PreReleaseTag = json.PreReleaseTag,
+                PreReleaseNumber = json.PreReleaseNumber
             };
             
             if(!string.IsNullOrEmpty(result.PreReleaseTag))
@@ -39,10 +43,18 @@ namespace Build.Buildary
         public class GitVersionResult
         {
             public string Version { get; set; }
+            
+            public int VersionMajor { get; set; }
+            
+            public int VersionMinor { get; set; }
+            
+            public int VersionPatch { get; set; }
 
             public string PreReleaseLabel { get; set; }
 
             public string PreReleaseTag { get; set; }
+            
+            public int PreReleaseNumber { get; set; }
 
             public string FullVersion { get; set; }
         }

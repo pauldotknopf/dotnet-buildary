@@ -54,7 +54,7 @@ namespace Build.Buildary
 
             public string PreReleaseTag { get; set; }
             
-            public int PreReleaseNumber { get; set; }
+            public string PreReleaseNumber { get; set; }
 
             public string FullVersion { get; set; }
         }

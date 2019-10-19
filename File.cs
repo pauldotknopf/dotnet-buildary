@@ -37,6 +37,10 @@ namespace Build.Buildary
 
         public static void CopyFile(string source, string destination)
         {
+            if (FileExists(destination))
+            {
+                DeleteFile(destination);
+            }
             System.IO.File.Copy(source, destination);
         }
 

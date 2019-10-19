@@ -2,52 +2,35 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using CommandLine;
 
 namespace Build.Buildary
 {
     public class Runner
     {
-        public static T ParseOptions<T>(IEnumerable<string> args) where T: RunnerOptions
+        public static void Execute(RunnerOptions options)
         {
-            T options = null;
-
-            try
-            {
-                options = PowerArgs.Args.Parse<T>(args.ToArray());
-            }
-            catch (PowerArgs.ArgException ex)
-            {
-                Console.WriteLine(ex.Message);
-                Console.WriteLine(PowerArgs.ArgUsage.GenerateUsageFromTemplate<T>());
-                Environment.Exit(1);
-            }
-
-            if(options == null)
-            {
-                // It was a help command (-help);
-                Environment.Exit(0);
-            }
-
-            return options;
+            var newArgs = new List<string>();
+            newArgs.Add(options.Target);
+            Bullseye.Targets.RunTargetsAndExit(newArgs.ToArray());
         }
 
-        public static RunnerOptions ParseOptions(IEnumerable<string> args)
+        public static T ParseOptions<T>(string[] args) where T: RunnerOptions
         {
-            return ParseOptions<RunnerOptions>(args);
-        }
-
-        public static Task Run(RunnerOptions options)
-        {
-            return Bullseye.Targets.RunTargetsAndExitAsync(new[] {options.Target});
+            T result = null;
+            var parsed = Parser.Default.ParseArguments<T>(args)
+                .WithParsed(o => { result = o; })
+                .WithNotParsed(errors => Environment.Exit(1));
+            return result;
         }
         
         public class RunnerOptions
         {
-            [PowerArgs.HelpHook, PowerArgs.ArgShortcut("-?")]
-            public bool Help { get; set; }
-
-            [PowerArgs.ArgDefaultValue("default"), PowerArgs.ArgPosition(0)]
+            [Value(0, Default = "default", HelpText = "The target to run.")]
             public string Target { get; set; }
+            
+            [Option('c', "config", HelpText = "The configuration.", Default = "Release")]
+            public string Config { get; set; }
         }
     }
 }

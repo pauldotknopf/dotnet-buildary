@@ -41,7 +41,7 @@ namespace Build.Buildary
             return System.IO.Directory.GetCurrentDirectory();
         }
 
-        public static List<string> GetDirecories(string directory, string pattern = null, bool recursive = false)
+        public static List<string> GetDirectories(string directory, string pattern = null, bool recursive = false)
         {
             var searchOptions = recursive ? System.IO.SearchOption.AllDirectories : System.IO.SearchOption.TopDirectoryOnly;
             return !string.IsNullOrEmpty(pattern)

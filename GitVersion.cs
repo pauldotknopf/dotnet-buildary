@@ -25,7 +25,8 @@ namespace Build.Buildary
                 VersionPatch = json.Patch,
                 PreReleaseLabel = json.PreReleaseLabel,
                 PreReleaseTag = json.PreReleaseTag,
-                PreReleaseNumber = json.PreReleaseNumber
+                PreReleaseNumber = json.PreReleaseNumber,
+                AssemblySemVer = json.AssemblySemVer
             };
             
             if(!string.IsNullOrEmpty(result.PreReleaseTag))
@@ -57,6 +58,8 @@ namespace Build.Buildary
             public string PreReleaseNumber { get; set; }
 
             public string FullVersion { get; set; }
+
+            public string AssemblySemVer { get; set; }
         }
     }
 }

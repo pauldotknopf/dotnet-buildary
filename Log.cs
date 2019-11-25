@@ -5,7 +5,7 @@ namespace Build.Buildary
 {
     public static class Log
     {
-        private static readonly Dictionary<MessageType, Func<bool, string>> Colors = new Dictionary<MessageType, Func<bool, string>>
+        internal static readonly Dictionary<MessageType, Func<bool, string>> Colors = new Dictionary<MessageType, Func<bool, string>>
         {
             [MessageType.Success] = Green,
             [MessageType.Info] = Blue,
@@ -13,7 +13,7 @@ namespace Build.Buildary
             [MessageType.Failure] = BrightRed,
         };
     
-        private enum MessageType
+        internal enum MessageType
         {
             Success,
             Info,
@@ -56,7 +56,7 @@ namespace Build.Buildary
         private static string BrightYellow     (bool color) => color ? "\x1b[93m"  : "";
         private static string BrightMagenta    (bool color) => color ? "\x1b[95m"  : "";
     
-        private static string Message(MessageType messageType, string text, bool color = true) =>
+        internal static string Message(MessageType messageType, string text, bool color = true) =>
             $"{Colors[messageType](color)}{text}{Default(color)}";
     }
 }

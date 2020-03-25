@@ -26,6 +26,16 @@ namespace Build.Buildary
             }
         }
         
+        public static void RunCommand(string command, string args)
+        {
+            if (!NoEcho)
+            {
+                Console.WriteLine($"{Log.Message(Log.MessageType.Info, "Running:")} {command}{(string.IsNullOrEmpty(args) ? "" : $" {args}")}");
+            }
+            
+            Run(command, args, Directory.CurrentDirectory(), true);
+        }
+        
         public static string ReadShell(string shell)
         {
             if (!NoEcho)
@@ -40,6 +50,16 @@ namespace Build.Buildary
 
             var escapedArgs = shell.Replace("\"", "\\\"");
             return Read("/usr/bin/env", $"bash -c \"{escapedArgs}\"", Directory.CurrentDirectory(), true);
+        }
+        
+        public static string ReadCommand(string command, string args)
+        {
+            if (!NoEcho)
+            {
+                Console.WriteLine($"{Log.Message(Log.MessageType.Info, "Running:")} {command}{(string.IsNullOrEmpty(args) ? "" : $" {args}")}");
+            }
+            
+            return Read(command, args, Directory.CurrentDirectory(), true);
         }
     }
 }

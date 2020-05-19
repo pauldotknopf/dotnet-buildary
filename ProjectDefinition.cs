@@ -51,12 +51,17 @@ namespace Build.Buildary
                 RunShell($"dotnet build {commandBuildArgs} {ExpandPath(definition.SolutionPath)}");
             });
 
+            Target("test", () =>
+            {
+                RunShell($"dotnet test {commandBuildArgs} {ExpandPath(definition.SolutionPath)}");
+            });
+
             Target("deploy", () =>
             {
                 RunShell($"dotnet pack --output {ExpandPath("./output")} {commandBuildArgsWithVersion} {ExpandPath(definition.SolutionPath)}");
             });
             
-            Target("ci", DependsOn("clean", "update-version", "deploy"));
+            Target("ci", DependsOn("clean", "update-version", "test", "deploy"));
             
             Target("default", DependsOn("build"));
         }

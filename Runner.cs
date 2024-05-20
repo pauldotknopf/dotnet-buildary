@@ -12,7 +12,16 @@ namespace Build.Buildary
         {
             var newArgs = new List<string>();
             newArgs.Add(options.Target);
-            Bullseye.Targets.RunTargetsAndExit(newArgs.ToArray());
+            try
+            {
+                Bullseye.Targets.RunTargetsAndExitAsync(newArgs).GetAwaiter().GetResult();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                Environment.Exit(1);
+                throw;
+            }
         }
 
         public static T ParseOptions<T>(string[] args) where T: RunnerOptions

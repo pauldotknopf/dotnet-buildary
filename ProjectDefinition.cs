@@ -21,10 +21,6 @@ namespace Build.Buildary
 
             var commandBuildArgs = $"--configuration {options.Config}";
             var commandBuildArgsWithVersion = commandBuildArgs;
-            if (!string.IsNullOrEmpty(gitVersion.PreReleaseTag))
-            {
-                commandBuildArgsWithVersion += $" --version-suffix \"{gitVersion.PreReleaseTag}\"";
-            }
             
             Target("clean", () =>
             {
